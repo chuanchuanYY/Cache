@@ -9,5 +9,7 @@ namespace Cache.Core;
 public interface ICache<T>
 {
     void Add(string key, T value);
+
+    void Add(string key, T value, TimeSpan ttl);
     T Get(string key);
 }

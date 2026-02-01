@@ -55,4 +55,15 @@ internal class LRUTest
         Assert.That(lru.Get("x"), Is.EqualTo(10));
         Assert.That(lru.Get("z"), Is.EqualTo(30));
     }
+
+
+    [Test]
+    public void TestExpiration()
+    {
+        var lru = new LRUCache<string>(2);
+        lru.Add("temp", "data", TimeSpan.FromMilliseconds(100));
+        Assert.That(lru.Get("temp"), Is.EqualTo("data"));
+        System.Threading.Thread.Sleep(200);
+        Assert.Throws<InvalidOperationException>(() => lru.Get("temp"));
+    }
 }
